@@ -1,7 +1,7 @@
 <?php
 include('../connection.php'); // your database connection file
 
-$sql = "ALTER TABLE `patients` ADD COLUMN `user_id` TEXT AFTER `patient_id`";
+$sql = "ALTER TABLE `appointments` ADD COLUMN `notes` TEXT AFTER `type`";
 
 if (mysqli_query($conn, $sql)) {
     echo "✅ Column 'notes' added successfully.";

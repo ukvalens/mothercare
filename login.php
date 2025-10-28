@@ -769,8 +769,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <div class="footer-section">
                 <h3>Contact Info</h3>
                 <ul class="footer-links">
-                    <li><i class="fas fa-phone"></i> +1 (555) 123-4567</li>
-                    <li><i class="fas fa-envelope"></i> info@maternalcare.ai</li>
+                    <li><i class="fas fa-phone"></i> +250780468216</li>
+                    <li><i class="fas fa-envelope"></i> ukwitegetsev9@gmail.com</li>
                     <li><i class="fas fa-map-marker-alt"></i> 123 Healthcare St, Medical City</li>
                 </ul>
             </div>
