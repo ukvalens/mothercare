@@ -695,7 +695,7 @@ $high_risk_patients = mysqli_query($conn, "SELECT COUNT(*) as count FROM pregnan
                             <tr>
                                 <td><?php echo htmlspecialchars($patient['patient_id']); ?></td>
                                 <td>
-                                    <strong><?php echo htmlspecialchars($patient['first_name'] . ' ' . $patient['last_name']); ?></strong>
+                                    <strong><?php echo htmlspecialchars($patient['first_name']); ?></strong>
                                 </td>
                                 <td><?php echo $age; ?></td>
                                 <td><?php echo htmlspecialchars($patient['contact_number'] ?? 'N/A'); ?></td>
