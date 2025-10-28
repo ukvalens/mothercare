@@ -79,7 +79,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - MaternalCare AI</title>
+    <title>Login - MaternalCare </title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
@@ -624,7 +624,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <div class="header-container">
             <a href="index.php" class="logo">
                 <i class="fas fa-baby"></i>
-                <span>MaternalCare AI</span>
+                <span>Maternal Healthcare</span>
             </a>
             <nav>
                 <ul class="nav-menu">
