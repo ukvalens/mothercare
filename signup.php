@@ -6,7 +6,7 @@ $error = '';
 $success = '';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $username = mysqli_real_escape_string($conn, $_POST['username']);
+    $nid = mysqli_real_escape_string($conn, $_POST['nid']);
     $email = mysqli_real_escape_string($conn, $_POST['email']);
     $password = mysqli_real_escape_string($conn, $_POST['password']);
     $role = mysqli_real_escape_string($conn, $_POST['role']);
@@ -14,12 +14,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $full_name = mysqli_real_escape_string($conn, $_POST['full_name']);
 
     // Check if user already exists for ALL roles
-    $check_query = "SELECT * FROM users WHERE email = '$email' OR username = '$username'";
+    $check_query = "SELECT * FROM users WHERE email = '$email' OR nid = '$nid'";
     $check_result = mysqli_query($conn, $check_query);
     $user_exists = mysqli_num_rows($check_result) > 0;
     
     if ($user_exists) {
-        $error = "User with this email or username already exists!";
+        $error = "User with this email or national ID already exists!";
     } else {
         // Hash password for ALL roles
         $hashed_password = password_hash($password, PASSWORD_DEFAULT);
@@ -34,8 +34,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $patient_id = mysqli_insert_id($conn);
                 
                 // Then create user account for the mother
-                $user_query = "INSERT INTO users (username, password, role, email, phone) 
-                              VALUES ('$username', '$hashed_password', 'Mother', '$email', '$phone')";
+                $user_query = "INSERT INTO users (nid, password, role, email, phone, full_name) 
+                              VALUES ('$nid', '$hashed_password', 'Mother', '$email', '$phone', '$full_name')";
                 
                 if (mysqli_query($conn, $user_query)) {
                     $user_id = mysqli_insert_id($conn);
@@ -59,8 +59,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             }
         } else {
             // Insert user for staff roles (Doctor, Nurse, Admin)
-            $insert_query = "INSERT INTO users (username, password, role, email, phone) 
-                            VALUES ('$username', '$hashed_password', '$role', '$email', '$phone')";
+            $insert_query = "INSERT INTO users (nid, password, role, email, phone, full_name) 
+                            VALUES ('$nid', '$hashed_password', '$role', '$email', '$phone', '$full_name')";
             
             if (mysqli_query($conn, $insert_query)) {
                 $user_id = mysqli_insert_id($conn);
@@ -854,54 +854,54 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         <?php endif; ?>
 
                         <form method="POST" action="">
-                            <div class="form-group">
-                                <label class="form-label" for="home_full_name">Full Name</label>
-                                <input type="text" class="form-control" id="home_full_name" name="full_name" 
-                                       placeholder="Enter your full name" required>
-                            </div>
+    <div class="form-group">
+        <label class="form-label" for="home_full_name">Full Name</label>
+        <input type="text" class="form-control" id="home_full_name" name="full_name" 
+               placeholder="Enter your full name" required>
+    </div>
 
-                            <div class="form-group">
-                                <label class="form-label" for="home_username">Username</label>
-                                <input type="text" class="form-control" id="home_username" name="username" 
-                                       placeholder="Choose a username" required>
-                            </div>
+    <div class="form-group">
+        <label class="form-label" for="home_nid">National ID Number</label>
+        <input type="text" class="form-control" id="home_nid" name="nid" 
+               placeholder="Enter your national ID number" required>
+    </div>
 
-                            <div class="form-group">
-                                <label class="form-label" for="home_email">Email Address</label>
-                                <input type="email" class="form-control" id="home_email" name="email" 
-                                       placeholder="Enter your email" required>
-                            </div>
+    <div class="form-group">
+        <label class="form-label" for="home_email">Email Address</label>
+        <input type="email" class="form-control" id="home_email" name="email" 
+               placeholder="Enter your email" required>
+    </div>
 
-                            <div class="form-group">
-                                <label class="form-label" for="home_phone">Phone Number</label>
-                                <input type="tel" class="form-control" id="home_phone" name="phone" 
-                                       placeholder="Enter your phone number" required>
-                            </div>
+    <div class="form-group">
+        <label class="form-label" for="home_phone">Phone Number</label>
+        <input type="tel" class="form-control" id="home_phone" name="phone" 
+               placeholder="Enter your phone number" required>
+    </div>
 
-                            <div class="form-group">
-                                <label class="form-label" for="home_password">Password</label>
-                                <input type="password" class="form-control" id="home_password" name="password" 
-                                       placeholder="Create a password" required minlength="6">
-                            </div>
+    <div class="form-group">
+        <label class="form-label" for="home_password">Password</label>
+        <input type="password" class="form-control" id="home_password" name="password" 
+               placeholder="Create a password" required minlength="6">
+    </div>
 
-                            <div class="form-group">
-                                <label class="form-label" for="home_role">I am a:</label>
-                                <select class="form-control" id="home_role" name="role" required onchange="showHomeRoleDescription()">
-                                    <option value="">Select your role</option>
-                                    <option value="Doctor">Doctor</option>
-                                    <option value="Nurse">Nurse</option>
-                                    <option value="Admin">Administrator</option>
-                                    <option value="Mother">Pregnant Mother</option>
-                                </select>
-                                <div id="home-role-description" class="role-description" style="display: none;">
-                                    Please select your role to see description
-                                </div>
-                            </div>
+    <div class="form-group">
+        <label class="form-label" for="home_role">I am a:</label>
+        <select class="form-control" id="home_role" name="role" required onchange="showHomeRoleDescription()">
+            <option value="">Select your role</option>
+            <option value="Doctor">Doctor</option>
+            <option value="Nurse">Nurse</option>
+            <option value="Admin">Administrator</option>
+            <option value="Mother">Pregnant Mother</option>
+        </select>
+        <div id="home-role-description" class="role-description" style="display: none;">
+            Please select your role to see description
+        </div>
+    </div>
 
-                            <div class="form-group">
-                                <button type="submit" class="btn btn-primary">Create Account</button>
-                            </div>
-                        </form>
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary">Create Account</button>
+    </div>
+</form>
 
                         <div class="auth-footer">
                             <p>Already have an account? <a href="login.php">Sign in here</a></p>
