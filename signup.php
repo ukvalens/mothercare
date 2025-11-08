@@ -6,7 +6,7 @@ $error = '';
 $success = '';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $nid = mysqli_real_escape_string($conn, $_POST['nid']);
+    // $nid = mysqli_real_escape_string($conn, $_POST['nid']);
     $email = mysqli_real_escape_string($conn, $_POST['email']);
     $password = mysqli_real_escape_string($conn, $_POST['password']);
     $role = mysqli_real_escape_string($conn, $_POST['role']);
@@ -14,7 +14,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $full_name = mysqli_real_escape_string($conn, $_POST['full_name']);
 
     // Check if user already exists for ALL roles
-    $check_query = "SELECT * FROM users WHERE email = '$email' OR nid = '$nid'";
+    $check_query = "SELECT * FROM users WHERE email = '$email' ";
     $check_result = mysqli_query($conn, $check_query);
     $user_exists = mysqli_num_rows($check_result) > 0;
     
@@ -34,8 +34,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $patient_id = mysqli_insert_id($conn);
                 
                 // Then create user account for the mother
-                $user_query = "INSERT INTO users (nid, password, role, email, phone, full_name) 
-                              VALUES ('$nid', '$hashed_password', 'Mother', '$email', '$phone', '$full_name')";
+                $user_query = "INSERT INTO users ( password, role, email, phone, username) 
+                              VALUES ( '$hashed_password', 'Mother', '$email', '$phone', '$full_name')";
                 
                 if (mysqli_query($conn, $user_query)) {
                     $user_id = mysqli_insert_id($conn);
@@ -59,8 +59,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             }
         } else {
             // Insert user for staff roles (Doctor, Nurse, Admin)
-            $insert_query = "INSERT INTO users (nid, password, role, email, phone, full_name) 
-                            VALUES ('$nid', '$hashed_password', '$role', '$email', '$phone', '$full_name')";
+            $insert_query = "INSERT INTO users ( password, role, email, phone, username) 
+                            VALUES ( '$hashed_password', '$role', '$email', '$phone', '$full_name')";
             
             if (mysqli_query($conn, $insert_query)) {
                 $user_id = mysqli_insert_id($conn);

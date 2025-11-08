@@ -2,6 +2,37 @@
 session_start();
 include 'connection.php';
 
+
+
+
+
+                                        include 'settings_helper.php'; // Include the settings helper
+
+                                        // Check if user is logged in
+                                        if (!isset($_SESSION['user_id'])) {
+                                            header("Location: login.php");
+                                            exit();
+                                        }
+
+                                        // Get system settings
+                                        $system_settings = getSystemSettings($conn);
+                                        $current_language = $system_settings['language'];
+                                        $current_theme = $system_settings['theme'];
+                                        $system_name = $system_settings['system_name'];
+
+                                        // Get translations
+                                        $t = getTranslations($current_language);
+
+                                        $user_id = $_SESSION['user_id'];
+                                        $username = $_SESSION['username'];
+                                        $role = $_SESSION['role'];
+
+
+
+
+
+
+
 // Check if user is logged in and is a doctor/nurse
 if (!isset($_SESSION['user_id']) || ($_SESSION['role'] != 'Doctor' && $_SESSION['role'] != 'Nurse')) {
     header("Location: login.php");
