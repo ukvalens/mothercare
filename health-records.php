@@ -100,6 +100,7 @@ if (isset($pregnancy_data)) {
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -139,7 +140,7 @@ if (isset($pregnancy_data)) {
             background-color: var(--primary);
             color: white;
             padding: 15px 0;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
         }
 
         .header-container {
@@ -166,7 +167,7 @@ if (isset($pregnancy_data)) {
         /* Navigation Styles */
         .nav-container {
             background-color: var(--secondary);
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
         }
 
         .nav-menu {
@@ -191,7 +192,8 @@ if (isset($pregnancy_data)) {
             border-bottom: 3px solid transparent;
         }
 
-        .nav-link:hover, .nav-link.active {
+        .nav-link:hover,
+        .nav-link.active {
             background-color: rgba(255, 255, 255, 0.1);
             border-bottom: 3px solid var(--accent);
         }
@@ -299,10 +301,21 @@ if (isset($pregnancy_data)) {
             font-size: 1.5rem;
         }
 
-        .overview-icon.weeks { background-color: var(--primary); }
-        .overview-icon.progress { background-color: var(--accent); }
-        .overview-icon.remaining { background-color: var(--success); }
-        .overview-icon.risk { background-color: var(--error); }
+        .overview-icon.weeks {
+            background-color: var(--primary);
+        }
+
+        .overview-icon.progress {
+            background-color: var(--accent);
+        }
+
+        .overview-icon.remaining {
+            background-color: var(--success);
+        }
+
+        .overview-icon.risk {
+            background-color: var(--error);
+        }
 
         .overview-value {
             font-size: 2rem;
@@ -395,7 +408,8 @@ if (isset($pregnancy_data)) {
             margin-bottom: 20px;
         }
 
-        .table th, .table td {
+        .table th,
+        .table td {
             padding: 12px 15px;
             text-align: left;
             border-bottom: 1px solid var(--border);
@@ -488,9 +502,17 @@ if (isset($pregnancy_data)) {
             border-left: 4px solid;
         }
 
-        .risk-item.low { border-left-color: var(--success); }
-        .risk-item.medium { border-left-color: #ffc107; }
-        .risk-item.high { border-left-color: var(--error); }
+        .risk-item.low {
+            border-left-color: var(--success);
+        }
+
+        .risk-item.medium {
+            border-left-color: #ffc107;
+        }
+
+        .risk-item.high {
+            border-left-color: var(--error);
+        }
 
         .risk-header {
             display: flex;
@@ -644,11 +666,11 @@ if (isset($pregnancy_data)) {
             .pregnancy-overview {
                 grid-template-columns: 1fr 1fr;
             }
-            
+
             .vital-stats {
                 grid-template-columns: 1fr 1fr;
             }
-            
+
             .visit-metrics {
                 grid-template-columns: 1fr 1fr;
             }
@@ -658,17 +680,18 @@ if (isset($pregnancy_data)) {
             .pregnancy-overview {
                 grid-template-columns: 1fr;
             }
-            
+
             .vital-stats {
                 grid-template-columns: 1fr;
             }
-            
+
             .visit-metrics {
                 grid-template-columns: 1fr;
             }
         }
     </style>
 </head>
+
 <body>
     <!-- Header -->
     <header class="header">
@@ -708,9 +731,9 @@ if (isset($pregnancy_data)) {
         <!-- Page Header -->
         <div class="page-header">
             <h1 class="page-title">Health Records & Medical History</h1>
-            <button class="btn btn-outline" onclick="downloadHealthReport()">
+            <a href="download_report.php" class="btn btn-outline">
                 <i class="fas fa-download"></i> Download Report
-            </button>
+            </a>
         </div>
 
         <?php if (!$patient_id || !isset($pregnancy_data)): ?>
@@ -755,7 +778,7 @@ if (isset($pregnancy_data)) {
                         <i class="fas fa-heartbeat"></i>
                     </div>
                     <div class="overview-value">
-                        <?php 
+                        <?php
                         if (isset($pregnancy_data['ai_risk_score'])) {
                             echo $pregnancy_data['ai_risk_score'] . '%';
                         } else {
@@ -776,7 +799,7 @@ if (isset($pregnancy_data)) {
                         Vital Signs Overview
                     </h3>
                     <?php if ($metrics_result && mysqli_num_rows($metrics_result) > 0): ?>
-                        <?php 
+                        <?php
                         $latest_visit = mysqli_fetch_assoc($metrics_result);
                         mysqli_data_seek($metrics_result, 0);
                         ?>
@@ -825,7 +848,7 @@ if (isset($pregnancy_data)) {
                         AI Risk Assessment
                     </h3>
                     <?php if ($risk_result && mysqli_num_rows($risk_result) > 0): ?>
-                        <?php while ($risk = mysqli_fetch_assoc($risk_result)): 
+                        <?php while ($risk = mysqli_fetch_assoc($risk_result)):
                             $risk_date = date('M j, Y', strtotime($risk['generated_at']));
                         ?>
                             <div class="risk-item <?php echo strtolower($risk['risk_level']); ?>">
@@ -868,7 +891,7 @@ if (isset($pregnancy_data)) {
                 </h3>
                 <?php if ($visits_result && mysqli_num_rows($visits_result) > 0): ?>
                     <div style="max-height: 400px; overflow-y: auto;">
-                        <?php while ($visit = mysqli_fetch_assoc($visits_result)): 
+                        <?php while ($visit = mysqli_fetch_assoc($visits_result)):
                             $visit_date = date('M j, Y', strtotime($visit['visit_date']));
                         ?>
                             <div class="visit-item">
@@ -1075,4 +1098,5 @@ if (isset($pregnancy_data)) {
         }
     </script>
 </body>
+
 </html>
